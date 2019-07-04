@@ -25,5 +25,10 @@ class Reading < ApplicationRecord
         thermostat(thermostat_id).minimum(method.to_sym)
       end
     end
+
+    private 
+    def method_missing(method, *args, &block)
+      puts "Sorry #{method} does not exist"
+    end
   end
 end

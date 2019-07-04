@@ -1,14 +1,16 @@
-# This file should contain all the record creation needed to seed the database with its default values.
-# The data can then be loaded with the rails db:seed command (or created alongside the database with db:setup).
-#
-# Examples:
-#
-#   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
-#   Character.create(name: 'Luke', movie: movies.first)
-
-100.times do
-  Thermostat.create(
-    household_token: Faker::Alphanumeric.alphanumeric(10),
-    location: Faker::Address.full_address
-  )
-end 
+Thermostat.create!(household_token: "1cyed7l2dd", location: "Suite 971 905 Rohan Square, East Olindamouth, AL 48907-6959")
+Thermostat.create!(household_token: "11sqjbee8b", location: "6948 Stark Circles, Hauckview, DE 35918-2431")
+Thermostat.create!(household_token: "1cyed7l2dd", location: "Suite 971 905 Rohan Square, East Olindamouth, AL 48907-6959")
+Thermostat.create!(household_token: "1cyed7l2dd", location: "Suite 971 905 Rohan Square, East Olindamouth, AL 48907-6959")
+Thermostat.create!(household_token: "11sqjbee8b", location: "6948 Stark Circles, Hauckview, DE 35918-2431")
+Thermostat.create!(household_token: "644z2pka0b", location: "Suite 818 31292 Rosenbaum Gateway, North Brett, NJ 62716")
+Thermostat.create!(household_token: "1cyed7l2dd", location: "Suite 971 905 Rohan Square, East Olindamouth, AL 48907-6959")
+Thermostat.create!(household_token: "11sqjbee8b", location: "6948 Stark Circles, Hauckview, DE 35918-2431")
+Thermostat.create!(household_token: "644z2pka0b", location: "Suite 818 31292 Rosenbaum Gateway, North Brett, NJ 62716")
+Thermostat.create!(household_token: "1cyed7l2dd", location: "Suite 971 905 Rohan Square, East Olindamouth, AL 48907-6959")
+Thermostat.create!(household_token: "644z2pka0b", location: "Suite 818 31292 Rosenbaum Gateway, North Brett, NJ 62716")
+Thermostat.create!(household_token: "1cyed7l2dd", location: "Suite 971 905 Rohan Square, East Olindamouth, AL 48907-6959")
+Thermostat.create!(household_token: "11sqjbee8b", location: "6948 Stark Circles, Hauckview, DE 35918-2431")
+Thermostat.create!(household_token: "644z2pka0b", location: "Suite 818 31292 Rosenbaum Gateway, North Brett, NJ 62716")
+Thermostat.create!(household_token: "1cyed7l2dd", location: "Suite 971 905 Rohan Square, East Olindamouth, AL 48907-6959")
+Thermostat.create!(household_token: "644z2pka0b", location: "Suite 818 31292 Rosenbaum Gateway, North Brett, NJ 62716")

@@ -1,6 +1,5 @@
 class CreateReadingWorker
   include Sidekiq::Worker
-  include Readable
   sidekiq_options queue: 'critical'
 
   def perform(thermostat_id, household_token, reading_params = {})
