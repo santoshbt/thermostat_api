@@ -1,18 +1,16 @@
 class ReadingsController < ApplicationController
   before_action :initilize_household
   before_action :authenticate_thermostat, only: [:create, :stats]
-
-  def create
-    # reading = HardWorker.perform_async(reading_params)   
-      reading = Reading.create(reading_params.merge(thermostat_id: @thermostat_id))
-      tracking_number = CalculateSequence.new(max_tracking_number).get_tracking_number
-      reading.update_column(:tracking_number, tracking_number)
-      render json: {tracking_number: reading.tracking_number, status: 200, message: 'created'}    
+  
+  def create    
+    CreateReadingWorker.perform_async(@thermostat_id, @household_token, reading_params)
+    tracking_number = ThermostatTracker.new(thermostat_id: @thermostat_id).max_tracking_number_thermostat 
+    render json: {tracking_number: tracking_number, status: 200}
   end
 
   def show     
     tracking_number = params[:tracking_number].to_i
-    reading = track_reading(tracking_number)
+    reading = ThermostatTracker.new(tracking_number: tracking_number, household_token: @household_token).track_reading
 
     unless reading.blank?
       render json: {temperature: reading.temperature, 
@@ -52,25 +50,12 @@ class ReadingsController < ApplicationController
   
   def authenticate_thermostat    
     @thermostat_id = params[:reading][:thermostat_id].to_i
+    thermostats = ThermostatTracker.new(household_token: @household_token).thermostats
     unless thermostats.include?(@thermostat_id)      
       render json: {status: 422, message: "Thermostat not found in the household #{@household_token}"} and return
     end  
   end
-
-  def thermostats
-    thermostats = Thermostat.where("household_token = ?", @household_token).pluck('id')
-    return thermostats
-  end
-
-  def track_reading(tracking_number)
-    Reading.find_by('tracking_number = ? and thermostat_id IN (?)', tracking_number, thermostats)
-  end
-
-  def max_tracking_number
-    tracking_numbers = Reading.where('thermostat_id IN (?)',thermostats).pluck('tracking_number')
-    tracking_numbers.compact.max
-  end
-
+  
   def reading_params
     params.require(:reading).permit(:temperature, :humidity, :battery_recharge)
   end
