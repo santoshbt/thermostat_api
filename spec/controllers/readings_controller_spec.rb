@@ -3,7 +3,7 @@ require 'sidekiq/testing'
 Sidekiq::Testing.fake! 
 
 RSpec.describe ReadingsController, :type => :controller do
-  let(:thermostat_id) {'4'}
+  let(:thermostat_id) {'1'}
   let(:household_token) {'1cyed7l2dd'}
 
   def validate_parse_response response
@@ -14,7 +14,7 @@ RSpec.describe ReadingsController, :type => :controller do
   describe "POST create reading" do
     it "Takes the input and runs background job to create" do         
       reading_params = { reading: { temperature: "26.9", humidity: "15.44", battery_recharge: "24.4",
-                                    thermostat_id: "4", household_token: "1cyed7l2dd"  } }
+                                    thermostat_id: "1", household_token: "1cyed7l2dd"  } }
 
       post :create, as: :json, params: reading_params   
 
@@ -28,8 +28,10 @@ RSpec.describe ReadingsController, :type => :controller do
   end
 
   context "GET the reading data and stats"
-    before do
-      FactoryBot.create(:reading)
+    before(:all) do
+      DatabaseCleaner.clean 
+      @thermostat = FactoryBot.create(:thermostat)
+      reading = FactoryBot.create(:reading)
     end
 
     describe "GET reading data by tracking number" do      
@@ -48,8 +50,8 @@ RSpec.describe ReadingsController, :type => :controller do
 
     describe "GET stats of the thermostat" do
       it "Takes thermostat id and outputs statistical data" do
-        @reading_1 = FactoryBot.create(:reading_1)
-        params = {reading: {household_token:  "1cyed7l2dd", thermostat_id: 4} }
+        reading_1 = FactoryBot.create(:reading_1)
+        params = {reading: {household_token:  "1cyed7l2dd", thermostat_id: @thermostat.id} }
 
         get :stats, as: :json, params: params
         json_data = validate_parse_response response

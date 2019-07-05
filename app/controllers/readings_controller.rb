@@ -7,7 +7,7 @@ class ReadingsController < ApplicationController
     ##### wait to get the real time tracking number to be updated by the background job in database
     sleep(0.5)                          
     tracking_number = ThermostatTracker.new(thermostat_id: @thermostat_id).max_tracking_number_thermostat 
-    render json: {tracking_number: tracking_number, status: 200}
+    render json: {tracking_number: tracking_number, status: 200, message: 'Reading created'}
   end
 
   def show     
@@ -18,7 +18,7 @@ class ReadingsController < ApplicationController
       render json: {temperature: reading.temperature, 
                     humidity: reading.humidity, 
                     battery_recharge: reading.battery_recharge,
-                    status: 200, message: 'found'}
+                    status: 200, message: 'Reading found'}
     else
       render json: {status: 422, message: 'unprocessable_entity'}
     end

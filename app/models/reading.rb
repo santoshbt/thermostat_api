@@ -1,5 +1,10 @@
 class Reading < ApplicationRecord
   belongs_to :thermostat, dependent: :destroy
+
+  validates :temperature, presence: true
+  validates :humidity, presence: true
+  validates :battery_recharge, presence: true
+
   STATS = %w(avg_temperature avg_humidity avg_battery_recharge max_temperature 
             min_temperature max_humidity min_humidity max_battery_recharge min_battery_recharge)
 
