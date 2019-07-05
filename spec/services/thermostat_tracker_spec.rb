@@ -2,7 +2,6 @@ require 'rails_helper'
 
 RSpec.describe ThermostatTracker do
   before(:all) do
-    DatabaseCleaner.clean
     FactoryBot.create(:thermostat)
     FactoryBot.create(:thermostat_1)
     FactoryBot.create(:thermostat_2)

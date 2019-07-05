@@ -2,15 +2,22 @@ require 'rails_helper'
 
 RSpec.describe Reading, :type => :model do
   before do
-    DatabaseCleaner.clean
     FactoryBot.create(:thermostat)    
     FactoryBot.create(:reading)    
     FactoryBot.create(:reading_1)   
   end
+
   let(:thermostat_id) {1} 
 
+  describe 'create thermostat readings' do
+    it 'associates with thermostat' do
+      t = Reading.reflect_on_association(:thermostat)
+      expect(t.macro).to eq(:belongs_to)
+    end 
+  end
+
   describe '.avg_temperature' do
-    subject { Reading.avg_temperature(thermostat_id) }
+    subject { described_class.avg_temperature(thermostat_id) }
 
     it 'returns average temperature for a particular thermostat' do
       expect(subject).to eq(0.259e2)

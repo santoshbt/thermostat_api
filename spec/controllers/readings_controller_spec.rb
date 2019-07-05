@@ -27,11 +27,10 @@ RSpec.describe ReadingsController, :type => :controller do
     end
   end
 
-  context "GET the reading data and stats"
+  context "GET the reading data and stats"    
     before(:all) do
-      DatabaseCleaner.clean 
-      @thermostat = FactoryBot.create(:thermostat)
-      reading = FactoryBot.create(:reading)
+      FactoryBot.create(:thermostat)
+      FactoryBot.create(:reading)
     end
 
     describe "GET reading data by tracking number" do      
@@ -51,7 +50,7 @@ RSpec.describe ReadingsController, :type => :controller do
     describe "GET stats of the thermostat" do
       it "Takes thermostat id and outputs statistical data" do
         reading_1 = FactoryBot.create(:reading_1)
-        params = {reading: {household_token:  "1cyed7l2dd", thermostat_id: @thermostat.id} }
+        params = {reading: {household_token:  "1cyed7l2dd", thermostat_id: 1} }
 
         get :stats, as: :json, params: params
         json_data = validate_parse_response response

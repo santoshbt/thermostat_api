@@ -8,7 +8,7 @@ class Reading < ApplicationRecord
   STATS = %w(avg_temperature avg_humidity avg_battery_recharge max_temperature 
             min_temperature max_humidity min_humidity max_battery_recharge min_battery_recharge)
 
-  Reading.singleton_class.class_eval do
+  self.class.class_eval do
     def thermostat(thermostat_id)
       group('thermostat_id').having("thermostat_id = ?", thermostat_id)
     end
