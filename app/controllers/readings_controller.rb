@@ -26,23 +26,20 @@ class ReadingsController < ApplicationController
 
   def stats
     stats = Reading::STATS
-    stats_hash = {}
+    stats_hash, json_hash = {}, {}
+    arr = ['max', 'min']
     begin
       stats.each do |stat|
         stats_hash[stat.to_sym] = Reading.send(stat.to_sym, @thermostat_id)
       end    
-      render json: {
-                    avg_temperature: stats_hash[:avg_temperature].round(2),
-                    avg_humidity: stats_hash[:avg_humidity].round(2),
-                    avg_battery_recharge: stats_hash[:avg_battery_recharge].round(2),
-                    max_temperature: stats_hash[:max_temperature][@thermostat_id],
-                    min_temperature: stats_hash[:min_temperature][@thermostat_id],
-                    max_humidity: stats_hash[:max_humidity][@thermostat_id],
-                    min_humidity: stats_hash[:min_humidity][@thermostat_id],
-                    max_battery_recharge: stats_hash[:max_battery_recharge][@thermostat_id],
-                    min_battery_recharge: stats_hash[:min_battery_recharge][@thermostat_id],
-                    status: 200
-                  }
+
+      stats.each do |stat|       
+        json_hash["#{stat}".to_sym] = stats_hash["#{stat}".to_sym].round(2) if stat.starts_with?('avg')        
+        json_hash["#{stat}".to_sym] = stats_hash[stat.to_sym][@thermostat_id] if stat.starts_with?(*arr) 
+      end
+      
+      json_hash.merge!({status: 200, message: "Statistical data"})
+      render json: json_hash
     rescue 
       render json: {status: 422, message: 'unprocessable_entity'}
     end
