@@ -1,28 +1,28 @@
 The API consists of three methods - 
 
-POST create reading data
-GET fetch reading data based on tracking number
+POST create reading data.
+GET fetch reading data based on tracking number.
 GET fetch statistical data of a particular thermostat.
 
 Softwares / Tools used
 ----------------------
 
-ruby 2.5.0p0
-Rails 5.2.3
-postgres (PostgreSQL) 9.6.11
-rspec
-sidekiq
-Postman
+ruby 2.5.0p0,
+Rails 5.2.3,
+postgres (PostgreSQL) 9.6.11,
+rspec,
+sidekiq,
+Postman,
 
 Setup
 -----
 install Postgres
 
-bundle install
-rake db:create
-rake db:migrate
-rake db:seed
-bundle exec sidekiq
+bundle install,
+rake db:create,
+rake db:migrate,
+rake db:seed,
+bundle exec sidekiq,
 rails server
 
 
