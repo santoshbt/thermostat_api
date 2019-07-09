@@ -1,5 +1,5 @@
 class Reading < ApplicationRecord
-  belongs_to :thermostat, dependent: :destroy
+  belongs_to :thermostat
 
   validates :temperature, presence: true
   validates :humidity, presence: true
