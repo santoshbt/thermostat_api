@@ -1,11 +1,11 @@
 class ThermostatTracker
   attr_reader :household_token, :thermostat_id, :thermostat_token, :tracking_number
 
-  def initialize(household_token: nil, thermostat_id: nil, thermostat_token: nil, tracking_number: nil)
-    @household_token = household_token
-    @thermostat_id = thermostat_id
-    @thermostat_token = thermostat_token
-    @tracking_number = tracking_number
+  def initialize(args)
+    @household_token = args[:household_token]
+    @thermostat_id = args[:thermostat_id]
+    @thermostat_token = args[:thermostat_token]
+    @tracking_number = args[:tracking_number]
   end
 
   def max_tracking_number_household
